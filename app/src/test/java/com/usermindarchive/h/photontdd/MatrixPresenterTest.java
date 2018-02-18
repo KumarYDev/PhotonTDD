@@ -1,7 +1,8 @@
 package com.usermindarchive.h.photontdd;
 
+import com.usermindarchive.h.photontdd.Model.MatrixResultEvent;
 import com.usermindarchive.h.photontdd.Model.MatrixResultFailureEvent;
-import com.usermindarchive.h.photontdd.Model.MatrixResultSuccessEvent;
+
 import com.usermindarchive.h.photontdd.Presenter.MatrixPresenter;
 
 import junit.framework.Assert;
@@ -36,6 +37,9 @@ public class MatrixPresenterTest {
     @Captor
     private ArgumentCaptor<List<Integer>> rowPath;
 
+    @Captor
+    private ArgumentCaptor<String> status;
+
     @Before
     public void setUp() throws Exception{
 
@@ -54,27 +58,16 @@ public class MatrixPresenterTest {
         matrixPresenter.onStart();
         List<Integer> sampleRowPath=new ArrayList<>(Arrays.asList(1,2,3,3));
         int sampleCost=10;
-        MatrixResultSuccessEvent matrixResultSuccessEvent=new MatrixResultSuccessEvent(sampleCost,sampleRowPath);
+        String sampleStatus="Yes";
+        MatrixResultEvent matrixResultEvent=new MatrixResultEvent(sampleCost,sampleRowPath,sampleStatus);
 
-        EventBus.getDefault().post(matrixResultSuccessEvent);
+        EventBus.getDefault().post(matrixResultEvent);
         matrixPresenter.onStop();
-        verify(matrixPresenterInterface).onSendMatrixResultSuccessEvent(cost.capture(),rowPath.capture(), matrixResultEvent.getFinalStatus());
+        verify(matrixPresenterInterface).onSendMatrixResultEvent(cost.capture(),rowPath.capture(), status.capture());
         Assert.assertEquals("10",cost.getValue().toString());
         Assert.assertEquals("[1, 2, 3, 3]",rowPath.getValue().toString());
+        Assert.assertEquals("Yes",status.getValue());
     }
 
-    @Test
-    public void testOnMatrixResltFailureEvent(){
-        matrixPresenter.onStart();
-        List<Integer> sampleRowPath=new ArrayList<>(Arrays.asList(1,2,3,3));
-        int sampleCost=51;
-        MatrixResultFailureEvent matrixResultSuccessEvent= new MatrixResultFailureEvent(sampleCost,sampleRowPath);
-
-        EventBus.getDefault().post(matrixResultSuccessEvent);
-        matrixPresenter.onStop();
-        verify(matrixPresenterInterface).onSendMatrixResultFailureEvent(cost.capture(),rowPath.capture());
-        Assert.assertEquals("51",cost.getValue().toString());
-        Assert.assertEquals("[1, 2, 3, 3]",rowPath.getValue().toString());
-    }
 
 }
