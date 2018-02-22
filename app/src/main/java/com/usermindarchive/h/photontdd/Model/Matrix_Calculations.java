@@ -253,7 +253,7 @@ public class Matrix_Calculations {
         for (int tempInt:tempPostionSaver){
             temp[j++]=tempInt;
         }
-        if(pMatrixRows!=2)
+        if(pMatrixRows>2)
         return nextPositionValues;
         else
         return temp;
