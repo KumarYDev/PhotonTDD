@@ -1,7 +1,7 @@
 package com.usermindarchive.h.photontdd;
 
 import com.usermindarchive.h.photontdd.Model.MatrixResultEvent;
-import com.usermindarchive.h.photontdd.Model.MatrixResultFailureEvent;
+
 
 import com.usermindarchive.h.photontdd.Presenter.MatrixPresenter;
 

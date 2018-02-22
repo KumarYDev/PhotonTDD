@@ -28,11 +28,6 @@ public class Matrix_Calculations {
     private List<Integer> pFinalRowPath=new ArrayList<>();
     private Map<Integer,Integer> matrixList=new HashMap<>();
     private List<Integer> Path=new ArrayList<>();
-
-    public List<PathListModel> getPathListModels() {
-        return pathListModels;
-    }
-
     private List<PathListModel> pathListModels=new ArrayList<>();
     private String errorMessage;
     
@@ -392,6 +387,11 @@ public class Matrix_Calculations {
 //  Method to set Error Message.
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+//  Method to return all possible paths and there cost.
+    public List<PathListModel> getPathListModels() {
+        return pathListModels;
     }
 
 }
